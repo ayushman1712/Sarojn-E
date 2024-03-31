@@ -13,6 +13,8 @@ db = mysql.connector.connect(
     
 )
 
+st.session_state["cur_page"] = 1
+
 st.session_state["exe"] = 0
 
 st.set_page_config(initial_sidebar_state="collapsed")
@@ -40,8 +42,12 @@ def products(cr):
         if(st.button(r[1])):
             st.session_state["var"] = r[0]
             if(st.session_state["exe"]==0):
-               st.switch_page(r"pages\prods.py")
+               st.switch_page(r"C:\Users\vijva\Documents\DBMS\Project\pages\prods.py")
                st.session_state["exe"] = 1
+               
+    if(st.button("BACK")):
+        st.switch_page()
+        
             
             
         
