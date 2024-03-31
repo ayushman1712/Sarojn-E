@@ -68,7 +68,7 @@ def login_page(cr):
         cr.execute(f"insert into account(emailID, Name, Password, PhoneNumber, Address, SessionID, isEmployee, AccountID) values ('{em}','{name}','{pas}','{num}','{addr}',{sess},0,'{acid}');")
         db.commit()
         sleep(2)
-        st.switch_page(r"C:\Users\vijva\Documents\DBMS\Project\pages\implementation.py")
+        st.switch_page(r"pages\implementation.py")
     max_attempts = 3
     
         
