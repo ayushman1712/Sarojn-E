@@ -67,7 +67,7 @@ def mai(cr):
         st.write("success")
         #sleep(3)
         
-        st.switch_page(r"C:\Users\vijva\Documents\DBMS\Project\pages\cat.py")
+        st.switch_page(r"pages\cat.py")
     
         
         
@@ -80,3 +80,32 @@ def mai(cr):
 
 mai(cr)
 
+
+
+
+
+
+
+
+
+            
+            
+                
+                
+                
+            
+        
+    
+
+
+        
+        
+        
+        
+        
+        
+        
+        
+        
+    
+    
