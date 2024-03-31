@@ -31,12 +31,17 @@ cr.execute("use mydb")
 def add_to_cart():
     product_id = st.session_state.get("add_to_cart_product_id")
     if product_id:
+        
         if "cart" not in st.session_state:
             st.session_state.cart = {}
         if product_id in st.session_state.cart:
             st.session_state.cart[product_id] += 1
         else:
             st.session_state.cart[product_id] = 1
+        
+    
+        
+        cr.execute(f"INSERT INTO mydb.CartItem (ItemQuantity, Product_ProductID) VALUES ({st.session_state.cart[product_id]}, '{product_id}');")
 
 def remove_from_cart(product_id):
     if product_id in st.session_state.cart:
