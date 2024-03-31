@@ -85,9 +85,16 @@ def prods():
             st.button("remove", key=f"remove_{r[0]}", on_click=remove_from_cart, args=(r[0],), disabled=(quantity == 0))
             
         #st.write(f"{str(r[3])} - ${r[1]:.2f}")
+    
+    a,b = st.columns(2)
+    with a:
+        if(st.button("VIEW CART")):
+            st.switch_page(r"pages\cart.py")
+    with b:
+        if(st.button("BACK")):
+            st.switch_page(r"pages\cat.py")
         
-    if(st.button("VIEW CART")):
-        st.switch_page(r"C:\Users\vijva\Documents\DBMS\Project\pages\cart.py")
+    
 
 prods()           
                     
