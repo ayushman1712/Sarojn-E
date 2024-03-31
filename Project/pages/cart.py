@@ -32,9 +32,14 @@ def view_cart():
     if len(st.session_state.cart) > 0:
         
         st.subheader("Your Cart")
-        for product_id, quantity in st.session_state.cart.items():
+        #for product_id, quantity in st.session_state.cart.items():
+        cr.execute("select * from cartitem;")
+        recs = cr.fetchall()
         #st.write(product_id)
+        for r in recs:
         # Fetch product details based on product_id
+            product_id = r[1]
+            quantity = r[0]
             cr.execute(f"select Description, Cost from product where ProductID = '{product_id}';")
             product_data = cr.fetchone()
             # Display product details and quantity
@@ -44,8 +49,14 @@ def view_cart():
         
         
         # Add buttons for update quantity or remove from cart (optional)
-    if st.button("BACK"):
-        st.switch_page(r"pages\prods.py")
+    a,b = st.columns(2)
+    with a:
+        if st.button("BACK"):
+            st.switch_page(r"pages\prods.py")
+    with b:
+        if(st.button("Proceed to Checkout")):
+            st.switch_page(r"pages\buy.py")
+        
 
 # Call view_cart() after the product listing section
 view_cart()
