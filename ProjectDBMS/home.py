@@ -122,10 +122,10 @@ def home():
     a, b = st.columns(2)
     
     if(st.button("LOGIN")):
-            st.switch_page(r"C:\Users\vijva\Documents\DBMS\Project\pages\implementation.py")
+            st.switch_page(r"pages\implementation.py")
     
     if(st.button("REGISTER")):
-            st.switch_page(r"C:\Users\vijva\Documents\DBMS\Project\pages\reg.py")
+            st.switch_page(r"pages\reg.py")
             
     
 
