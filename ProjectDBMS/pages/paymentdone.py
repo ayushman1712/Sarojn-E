@@ -32,7 +32,7 @@ def paid(cr):
     st.write("Payment completed!")
     
     if(st.button("BAck to Categories")):
-        st.switch_page(r"C:\Users\vijva\Documents\DBMS\Project\pages\cat.py")
+        st.switch_page(r"pages\cat.py")
         
 paid(cr)      
         
