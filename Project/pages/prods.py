@@ -42,6 +42,7 @@ def add_to_cart():
     
         
         cr.execute(f"INSERT INTO mydb.CartItem (ItemQuantity, Product_ProductID) VALUES ({st.session_state.cart[product_id]}, '{product_id}');")
+        db.commit()
 
 def remove_from_cart(product_id):
     if product_id in st.session_state.cart:
@@ -78,7 +79,7 @@ def prods():
             st.write(str(r[2]))
         
         with col1:
-            st.button("add", key=f"add_{r[0]}", on_click=add_to_cart_callback, args=(r[0],))
+            st.button("add", key=f"add_{r[0]}", on_click=add_to_cart_callback, args=(r[0],),disabled = (quantity == r[6]))
         with col2:
             st.write(f"{quantity}")
         with col3:
