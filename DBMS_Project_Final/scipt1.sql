@@ -237,7 +237,34 @@ CREATE TABLE IF NOT EXISTS mydb.Membership_has_Discount (
     ON UPDATE NO ACTION
 );
 
--- trigger 1
+/*CREATE TABLE IF NOT EXISTS mydb.CartItem_has_Session (
+  CartItem_Product_ProductID VARCHAR(255) NOT NULL,
+  Session_SessionID INT NOT NULL,
+  Session_User_Account_AccountID VARCHAR(45) NOT NULL,
+  ItemQuantity INT NOT NULL,
+  PRIMARY KEY (CartItem_Product_ProductID, Session_SessionID, Session_User_Account_AccountID),
+  INDEX fk_CartItem_has_Session_Session1_idx (Session_SessionID ASC, Session_User_Account_AccountID ASC) VISIBLE,
+  INDEX fk_CartItem_has_Session_CartItem1_idx (CartItem_Product_ProductID ASC) VISIBLE,
+  CONSTRAINT fk_CartItem_has_Session_CartItem1
+    FOREIGN KEY (CartItem_Product_ProductID)
+    REFERENCES mydb.CartItem (Product_ProductID)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT fk_CartItem_has_Session_Session1
+    FOREIGN KEY (Session_SessionID )
+    REFERENCES mydb.Session (SessionID )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION
+);*/
+
+/*ALTER TABLE mydb.Account
+ADD COLUMN login_attempts INT DEFAULT 0;
+
+CREATE TRIGGER on_three_incorrect_attempts
+BEFORE UPDATE ON account
+FOR EACH ROW 
+	DELETE FROM account
+    WHERE AccountID = NEW.AccountID AND NEW.login_attempts = 3;*/
     
 DELIMITER //
 
@@ -252,7 +279,56 @@ END//
 
 DELIMITER ;
 
--- trigger 2
+/*DELIMITER //
+
+CREATE TRIGGER update_product_quantity2
+AFTER UPDATE ON mydb.CartItem
+FOR EACH ROW
+BEGIN
+    IF OLD.CartItemID IS NULL THEN
+     Insert operation - no old quantity 
+       SET old_quantity = 0;
+	if NEW.ItemQuantity>OLD.ItemQuantity THEN
+    UPDATE mydb.Product
+    SET Quantity = Quantity - 1
+    WHERE ProductID = NEW.Product_ProductID;
+    ELSEIF NEW.ItemQuantity<OLD.ItemQuantity THEN
+    UPDATE mydb.Product
+    SET Quantity = Quantity + 1
+    WHERE ProductID = NEW.Product_ProductID;
+    end if;
+END//
+
+DELIMITER ;*/
+
+/*DELIMITER //
+CREATE TRIGGER update_product_quantity2
+AFTER UPDATE ON mydb.CartItem
+FOR EACH ROW
+BEGIN
+  IF OLD.CartItemID IS NULL THEN
+    SET old_quantity = 0;
+  ELSE
+    SET old_quantity = OLD.ItemQuantity;  -- Use OLD.ItemQuantity for updates
+  END IF;
+
+  SET new_quantity = NEW.ItemQuantity;
+
+  SELECT Quantity INTO product_quantity
+  FROM mydb.Product
+  WHERE ProductID = NEW.Product_ProductID;
+
+  IF new_quantity > old_quantity THEN
+    UPDATE mydb.Product
+    SET Quantity = Quantity - (new_quantity - old_quantity)
+    WHERE ProductID = NEW.Product_ProductID;
+  ELSEIF new_quantity < old_quantity THEN
+    UPDATE mydb.Product
+    SET Quantity = Quantity + (old_quantity - new_quantity)
+    WHERE ProductID = NEW.Product_ProductID;
+  END IF;
+END //
+DELIMITER ;*/
 
 DELIMITER //
 
@@ -272,8 +348,6 @@ BEGIN
 END//
 
 DELIMITER ;
-
--- trigger 3
 
 DELIMITER $$
 CREATE TRIGGER validate_cart_item_product
